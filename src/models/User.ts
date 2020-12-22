@@ -1,4 +1,5 @@
 
+import { isEmpty } from 'lodash';
 interface UserProps {
     name?: string;
     age?: number;
@@ -20,9 +21,21 @@ export class User {
         Object.assign(this.data, update)
     }
 
-    on(eventName: string, callback: Callback) {
+    on(eventName: string, callback: Callback): void {
         const handlers = this.events[eventName] || [];
         handlers.push(callback);
         this.events[eventName] = handlers;
+    }
+
+    trigger(eventName: string): void {
+        const handlers = this.events[eventName];
+
+        if(isEmpty(handlers)) {
+            return;
+        }
+
+        handlers.forEach((callback) => {
+            callback();
+        });
     }
 }

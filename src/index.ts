@@ -1,17 +1,9 @@
+import axios from 'axios';
 import { User } from './models/User';
 
-const user = new User({});
-
-console.log(user.get('name'));
-console.log(user.get('age'));
-
-user.set({name: 'newName'});
-
-console.log(user.get('name'));
-console.log(user.get('age'));
-
-user.on('change', () => {
-    console.log('user props changes!');
+axios.post('http://localhost:3000/users', {
+    name: 'john',
+    age: 33,
 });
 
-console.log(user);
+axios.get('http://localhost:3000/users');
