@@ -1,8 +1,5 @@
-
-import { isEmpty } from 'lodash';
-import axios, { AxiosResponse } from 'axios';
-import { EventHandler } from './EventHandler';
-interface UserProps {
+import { Model } from './Model';
+interface ModelProps {
     id?: number;
     name?: string;
     age?: number;
@@ -10,32 +7,11 @@ interface UserProps {
 
 type Callback = () => void;
 
-export class User {
-    constructor(private data: UserProps) {}
+interface UserProps {
+    id?: number;
+    name?: string;
+    age?: number;
+}
+export class User extends Model<UserProps> {
 
-    public events: EventHandler = new EventHandler();
-
-    get(propname: string): (string | number) {
-        return this.data[propname];
-    }
-
-    set(update: UserProps): void {
-        this.data = { ...this.data, ...update }
-    }
-
-    fetch(): void {
-        axios.get(`http://localhost:3000/users/${this.get('id')}`)
-            .then((response: AxiosResponse): void => {
-                this.set(response.data);
-            });
-    }
-
-    save(): void {
-        const id = this.get('id')
-        if(isEmpty(id)) {
-            axios.post(`http://localhost:3000/users`, this.data);          
-        } else {
-            axios.put(`http://localhost:3000/users/${id}`, this.data);          
-        }
-    }
 }
