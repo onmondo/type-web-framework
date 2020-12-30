@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 type Callback = () => void;
 type Events = { [key: string]: Callback[] };
 
-export class EventHandler {
+export class EventsHandler {
     private events: Events = {};
 
     on(eventName: string, callback: Callback): void {
