@@ -1,6 +1,7 @@
 
 import { isEmpty } from 'lodash';
 import axios, { AxiosResponse } from 'axios';
+import { EventHandler } from './EventHandler';
 interface UserProps {
     id?: number;
     name?: string;
@@ -12,30 +13,14 @@ type Callback = () => void;
 export class User {
     constructor(private data: UserProps) {}
 
+    public events: EventHandler = new EventHandler();
+
     get(propname: string): (string | number) {
         return this.data[propname];
     }
 
     set(update: UserProps): void {
-        Object.assign(this.data, update)
-    }
-
-    on(eventName: string, callback: Callback): void {
-        const handlers = this.events[eventName] || [];
-        handlers.push(callback);
-        this.events[eventName] = handlers;
-    }
-
-    trigger(eventName: string): void {
-        const handlers = this.events[eventName];
-
-        if(isEmpty(handlers)) {
-            return;
-        }
-
-        handlers.forEach((callback) => {
-            callback();
-        });
+        this.data = { ...this.data, ...update }
     }
 
     fetch(): void {
