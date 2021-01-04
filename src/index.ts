@@ -1,18 +1,19 @@
 import { User } from './models/User';
 
-const user = new User({ id: 1 });
+// Persist Data
+// const user = new User({ name: 'jo', age: 0 });
+// user.on('save', () => {
+//     console.log(user);
+// });
 
-const mine = user.sync.fetch(1);
-console.log(mine);
+// user.save();
 
-user.events.on('login', () => {
-    console.log('users login');
+// ===========================================
+
+// Pull Data
+const user = new User({ id: 7 })
+user.on('change', () => {
+    console.log(user);
 });
 
-user.events.trigger('login');
-
-user.attributes.set({ name: 'mon', age: 30 });
-
-const name = user.attributes.get('name');
-
-console.log(name);
+user.fetch();
