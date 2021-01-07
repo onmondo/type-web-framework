@@ -1,7 +1,7 @@
 import { Model } from './Model';
-import { Attributes } from './Attributes';
-import { EventsHandler } from './EventsHandler';
-import { ApiSync } from './ApiSync';
+import { Attributes } from './Model/Attributes';
+import { EventsHandler } from './Model/EventsHandler';
+import { ApiSync } from './Model/ApiSync';
 interface UserProps {
     id?: number;
     name?: string;
